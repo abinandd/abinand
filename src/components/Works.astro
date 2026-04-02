@@ -1,125 +1,50 @@
 ---
-
+import { projects, personalInfo } from "../utils/data.js";
 ---
 
-<section class="w-full px-5 py-24 bg-white">
+<section class="w-full px-5 py-24 bg-white" id="works">
   <div class="max-w-screen-xl mx-auto w-full">
     <!-- Introductory / Mission Text -->
     <div class="max-w-5xl mx-auto text-center mb-20">
       <p
         class="text-3xl md:text-5xl font-medium leading-normal md:leading-snug text-black"
       >
-        <span class="text-gray-400">A passionate</span> designer, developer, and problem-solver
-        dedicated <span class="text-gray-400">to crafting meaningful</span> digital
-        experiences. <span class="text-gray-400">With</span> 10 years of experience
-        <span class="text-gray-400"
-          >in the creative industry, I specialize in blending</span
-        > aesthetics with functionality <span class="text-gray-400">to</span> create
-        designs <span class="text-gray-400">that are not only</span> visually stunning
-        <span class="text-gray-400">but also</span> user-friendly
-        <span class="text-gray-400">and impactful.</span>
+        <span class="text-gray-400">{personalInfo.bioPart1}</span>
+        {personalInfo.bioPart2}
+        <span class="text-gray-400">{personalInfo.bioPart3}</span>
+        {personalInfo.bioPart4}
+        <span class="text-gray-400">{personalInfo.bioPart5}</span>
       </p>
     </div>
 
     <!-- Works Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-      <a
-        href="/projects/boldstream"
-        class="block w-full overflow-hidden rounded-2xl group"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/6873842f403ef4a65e3c03c3_thumb-1.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/streamline"
-        class="block w-full overflow-hidden rounded-2xl group"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/6873842f510c10b7494e5944_thumb-2.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/innovate"
-        class="block w-full overflow-hidden rounded-2xl group"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/68738430c59498b19fbe45a6_thumb-3.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/elevate"
-        class="block w-full overflow-hidden rounded-2xl group"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/6873842fd94b787d3838cc5a_thumb-4.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/transform"
-        class="block w-full overflow-hidden rounded-2xl group hidden md:block"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/68738430f73b6b65f795e00b_thumb-5.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/synergy"
-        class="block w-full overflow-hidden rounded-2xl group hidden md:block"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/6873843006c54dca6fb30c9b_thumb-6.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/fusion"
-        class="block w-full overflow-hidden rounded-2xl group hidden lg:block"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/68738430f8f01a6fd0803d2c_thumb-7.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
-      <a
-        href="/projects/nexgen"
-        class="block w-full overflow-hidden rounded-2xl group hidden lg:block"
-      >
-        <img
-          src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/68738431a088848d0fefebf9_thumb-8.webp"
-          alt="thumb"
-          loading="lazy"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </a>
+      {
+        projects.map((project) => (
+          <a
+            href={project.link}
+            target="_blank"
+            class={project.visibilityClasses}
+          >
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </a>
+        ))
+      }
     </div>
 
     <!-- View All Button -->
     <div class="mt-16 flex justify-center">
       <a
-        href="/projects"
+        href={personalInfo.github}
+        target="_blank"
         class="group flex items-center justify-center space-x-2 bg-black text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-800 transition-colors"
       >
-        <span>View All Works</span>
+        <span>View My GitHub</span>
         <svg
           class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity"
           viewBox="0 0 12 12"

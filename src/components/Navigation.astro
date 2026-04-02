@@ -1,16 +1,16 @@
 ---
-
+import { personalInfo } from "../utils/data.js";
 ---
 
 <nav class="w-full flex justify-center sticky top-0 bg-white z-50 px-5 py-6">
   <div class="max-w-screen-xl mx-auto w-full flex justify-between items-center">
     <!-- Logo -->
-    <a href="/" class="flex items-center" aria-current="page">
-      <img
-        src="https://cdn.prod.website-files.com/686964cfa204c3a3ace96bce/686d182361817ae1b39b9925_logo.svg"
-        alt="logo"
-        class="h-8"
-      />
+    <a
+      href="/"
+      class="flex items-center text-2xl font-bold text-black tracking-tight"
+      aria-current="page"
+    >
+      {personalInfo.name}
     </a>
 
     <!-- Nav Links -->

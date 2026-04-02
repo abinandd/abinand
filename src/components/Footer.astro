@@ -1,5 +1,5 @@
 ---
-
+import { personalInfo } from "../utils/data.js";
 ---
 
 <footer class="w-full bg-white px-5 py-20 mt-10">
@@ -12,7 +12,7 @@
       <h2
         class="text-4xl md:text-5xl font-semibold text-gray-900 mb-10 max-w-2xl mx-auto"
       >
-        Have a creative idea in mind? Let’s discuss it
+        Let's Build Something Remarkable
       </h2>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
@@ -32,10 +32,10 @@
           </svg>
         </a>
         <a
-          href="/contact"
+          href={`mailto:${personalInfo.email}`}
           class="group flex items-center bg-white border border-gray-300 text-black px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-50 transition"
         >
-          <span>Book a Call</span>
+          <span>Contact Me</span>
           <svg
             class="w-5 h-5 ml-2 opacity-70 group-hover:opacity-100 transition-opacity"
             viewBox="0 0 12 12"
@@ -52,7 +52,7 @@
   </div>
 
   <div
-    class="max-w-screen-xl mx-auto flex flex-col lg:flex-row justify-between items-center text-base text-gray-600 gap-8 mt-10 border-t pt-8"
+    class="max-w-screen-xl mx-auto flex flex-col lg:flex-row justify-between items-center text-base text-gray-600 gap-8 mt-10 border-t border-gray-200 pt-8"
   >
     <div class="flex flex-wrap justify-center gap-6 font-medium">
       <a href="/" class="hover:text-black hover:underline" aria-current="page"
@@ -66,34 +66,38 @@
 
     <div class="flex flex-wrap justify-center gap-6 font-medium">
       <a
-        href="https://www.instagram.com/"
+        href={personalInfo.github}
         target="_blank"
-        class="hover:text-black hover:underline">Instagram</a
+        class="hover:text-black hover:underline">GitHub</a
       >
       <a
-        href="https://twitter.com/"
-        target="_blank"
-        class="hover:text-black hover:underline">X/Twitter</a
-      >
-      <a
-        href="https://www.linkedin.com/"
+        href={personalInfo.linkedin}
         target="_blank"
         class="hover:text-black hover:underline">LinkedIn</a
       >
       <a
-        href="https://www.facebook.com/"
+        href={personalInfo.leetcode}
         target="_blank"
-        class="hover:text-black hover:underline">Facebook</a
+        class="hover:text-black hover:underline">LeetCode</a
+      >
+      <a
+        href={`mailto:${personalInfo.email}`}
+        target="_blank"
+        class="hover:text-black hover:underline">Email</a
       >
     </div>
 
     <div class="font-medium text-center flex gap-2 justify-center items-center">
-      Designed by <a href="#" target="_blank" class="text-black hover:underline"
-        >Mavenflow</a
+      Designed by <a
+        href={personalInfo.github}
+        target="_blank"
+        class="text-black hover:underline">{personalInfo.name}</a
       >
       <span class="w-1.5 h-1.5 bg-gray-300 rounded-full mx-1"></span>
-      <a href="/template-info/licenses" class="hover:text-black hover:underline"
-        >Licence</a
+      <a
+        href="/resume.pdf"
+        download="resume.pdf"
+        class="hover:text-black hover:underline">Resume</a
       >
     </div>
   </div>
