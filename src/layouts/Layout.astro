@@ -99,7 +99,14 @@ const { title } = Astro.props;
         --_font-family---poppins: "Raleway", sans-serif !important;
       }
 
-      body,
+      body {
+        background-color: #0c0c0d !important;
+        color: #f8fafc !important; /* Slightly off-white for better reading */
+        font-family: "Raleway", sans-serif !important;
+        margin: 0;
+        padding: 0;
+      }
+
       h1,
       h2,
       h3,
@@ -117,12 +124,55 @@ const { title } = Astro.props;
       select,
       textarea,
       .font-sans,
-      .font-serif {
+      .font-serif,
+      .section-title,
+      .best-item-title,
+      .testimonial-item-author-name {
         font-family: "Raleway", sans-serif !important;
+        color: white !important;
+      }
+
+      /* Universal Section Fixes */
+      section,
+      .section,
+      .best-section,
+      .testimonial-section,
+      .works-section,
+      .hero-section,
+      div[class*="bg-white"],
+      section[class*="bg-white"],
+      .section-spacing,
+      .container,
+      .main-wrapper {
+        background-color: transparent !important;
+        color: white !important;
+      }
+
+      /* Card Fixes */
+      .best-item,
+      .testimonial-item,
+      .project-card,
+      .works-item {
+        background-color: #1a1a1c !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        color: white !important;
+      }
+
+      .best-item-text,
+      .testimonial-item-text,
+      .testimonial-item-author-info {
+        color: rgba(255, 255, 255, 0.7) !important;
+      }
+
+      /* Remove legacy Webflow shadows that look bad in dark mode */
+      .shadow-lg,
+      .shadow-md,
+      .shadow-sm {
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
       }
     </style>
   </head>
-  <body>
+  <body class="bg-[#0c0c0d] text-white">
     <slot />
 
     <script

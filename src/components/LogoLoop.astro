@@ -1,0 +1,115 @@
+---
+/**
+ * LogoLoop Component
+ * An infinite horizontal loop of technology logos.
+ * Uses pure CSS for performance and smooth motion.
+ */
+const techLogos = [
+    {
+        name: "Java",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
+    },
+    {
+        name: "JavaScript",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
+    },
+    {
+        name: "MongoDB",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
+    },
+    {
+        name: "Express",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg",
+    },
+    {
+        name: "React",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+    },
+    {
+        name: "Node.js",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
+    },
+    {
+        name: "Spring Boot",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg",
+    },
+    {
+        name: "MySQL",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg",
+    },
+    {
+        name: "AWS",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    },
+    {
+        name: "Linux",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg",
+    },
+    {
+        name: "Git",
+        icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
+    },
+];
+---
+
+<div class="w-full py-16 overflow-hidden bg-transparent">
+    <div class="logo-container relative">
+        <div class="logo-track flex items-center gap-10 whitespace-nowrap">
+            {/* Duplicate the logos multiple times to ensure a seamless loop */}
+            {
+                [...Array(4)].map(() => (
+                    <div class="flex items-center gap-10 shrink-0">
+                        {techLogos.map((logo) => (
+                            <div class="flex items-center justify-center p-5 bg-[#141416] rounded-[22px] w-24 h-24 group transition-all duration-500 hover:bg-[#1a1a1c] hover:-translate-y-2 hover:shadow-2xl border border-white/5">
+                                <div class="w-12 h-12 flex items-center justify-center transition-all duration-500">
+                                    <img
+                                        src={logo.icon}
+                                        alt={logo.name}
+                                        class="w-full h-full object-contain"
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .logo-container {
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+    }
+
+    .logo-track {
+        animation: loop 40s linear infinite;
+        width: max-content;
+    }
+
+    .logo-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes loop {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>

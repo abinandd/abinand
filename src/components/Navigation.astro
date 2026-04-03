@@ -1,18 +1,21 @@
 ---
 import { personalInfo } from "../utils/data.js";
+/**
+ * Navigation Component - Premium White Floating Pill (Expandable)
+ */
 ---
 
 <header
-  class="fixed top-8 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none"
+  class="fixed top-8 left-0 right-0 z-[120] flex justify-center px-4 pointer-events-none"
 >
   <nav
     id="pill-nav"
-    class="pointer-events-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-gray-200/50 flex items-center p-1.5 pl-3 transition-all duration-500 ease-in-out ring-1 ring-black/5 min-w-[300px] justify-between max-w-fit hover:shadow-xl group/nav"
+    class="pointer-events-auto bg-white/90 backdrop-blur-3xl rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] border border-black/5 flex items-center p-1.5 pl-3 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-w-[280px] justify-between group/nav"
   >
     <!-- Left: Profile -->
-    <a href="/" class="flex items-center gap-3 group shrink-0">
+    <a href="/" class="flex items-center gap-3 shrink-0 group/avatar">
       <div
-        class="w-9 h-9 rounded-full overflow-hidden bg-gray-100 border border-gray-200 transition-transform duration-500 group-hover:scale-105"
+        class="w-9 h-9 rounded-full overflow-hidden bg-white/10 ring-2 ring-black/5 transition-transform group-hover/avatar:scale-110"
       >
         <img
           src="https://api.dicebear.com/7.x/avataaars/svg?seed=Abhinand&backgroundColor=b6e3f4"
@@ -21,64 +24,113 @@ import { personalInfo } from "../utils/data.js";
         />
       </div>
       <span
-        class="text-black font-semibold text-sm tracking-tight hidden sm:block"
+        class="text-black font-bold text-[14px] tracking-tight hidden sm:block"
       >
         {personalInfo.name}
       </span>
     </a>
 
-    <!-- Middle: Links -->
+    <!-- Middle Content: (Visible only when expanded) -->
     <div
-      class="flex items-center overflow-hidden transition-all duration-500 ease-in-out max-w-0 opacity-0 group-[.is-expanded]/nav:max-w-[800px] group-[.is-expanded]/nav:opacity-100"
+      class="flex items-center overflow-hidden transition-all duration-500 ease-in-out max-w-0 opacity-0 group-[.is-expanded]/nav:max-w-[700px] group-[.is-expanded]/nav:opacity-100 group-[.is-expanded]/nav:mx-4"
     >
-      <div class="flex items-center gap-1 ml-4 pl-4 border-l border-gray-100">
-        {
-          [
-            { label: "Home", href: "/" },
-            { label: "Projects", href: "/projects" },
-            { label: "Services", href: "/services" },
-            { label: "About", href: "/about" },
-            { label: "Blog", href: "/blogs" },
-          ].map((link) => (
-            <a
-              href={link.href}
-              class="px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-black hover:bg-gray-50 rounded-full transition-colors whitespace-nowrap"
-            >
-              {link.label}
-            </a>
-          ))
-        }
+      <div class="flex items-center gap-2 pl-4 border-l border-black/5">
         <a
-          href="/shop"
-          class="px-4 py-1.5 bg-black text-white text-[10px] font-bold rounded-full hover:bg-gray-800 transition-all uppercase tracking-wider ml-2"
-          >Shop</a
+          href="#about"
+          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          >About</a
+        >
+        <a
+          href="#works"
+          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          >Works</a
+        >
+        <a
+          href="#services"
+          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          >Services</a
+        >
+        <a
+          href="#testimonials"
+          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          >Feedbacks</a
+        >
+        <a
+          href="#blog"
+          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5 hidden md:block"
+          >Blog</a
+        >
+
+        <a
+          href="mailto:abhinand155@gmail.com"
+          class="ml-4 px-5 py-2.5 bg-black text-white text-[10px] font-black rounded-full hover:bg-gray-800 transition-all uppercase tracking-widest shadow-lg shrink-0"
+          >Hire Me</a
         >
       </div>
     </div>
 
-    <!-- Right: Menu -->
+    <!-- Right: Expansion Trigger -->
     <button
       id="menu-toggle"
-      class="w-9 h-9 bg-black rounded-full flex flex-col items-center justify-center gap-[3px] transition-all duration-500 hover:bg-gray-900 active:scale-90 shrink-0"
+      class="w-9 h-9 bg-black rounded-full flex flex-col items-center justify-center gap-[3px] transition-all duration-500 hover:scale-105 active:scale-95 shrink-0 ml-4 group-hover/nav:bg-[#222]"
       aria-label="Toggle Menu"
     >
       <div
-        class="w-4 h-[1.2px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:rotate-45 group-[.is-expanded]/nav:translate-y-[2px]"
+        class="w-3.5 h-[1.5px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:rotate-45 group-[.is-expanded]/nav:translate-y-[2.2px]"
       >
       </div>
       <div
-        class="w-4 h-[1.2px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:-rotate-45 group-[.is-expanded]/nav:-translate-y-[2px]"
+        class="w-3.5 h-[1.5px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:-rotate-45 group-[.is-expanded]/nav:-translate-y-[2.2px]"
       >
       </div>
     </button>
   </nav>
-
-  <div
-    id="nav-backdrop"
-    class="fixed inset-0 bg-black/5 backdrop-blur-[1px] z-[-1] opacity-0 pointer-events-none transition-opacity duration-500"
-  >
-  </div>
 </header>
+
+<div
+  id="nav-backdrop"
+  class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] opacity-0 pointer-events-none transition-opacity duration-700"
+>
+</div>
+
+<style is:inline>
+  #pill-nav {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  #pill-nav.is-expanded {
+    min-width: 320px;
+  }
+
+  /* Force override global white text styles */
+  #pill-nav span {
+    font-size: 14px !important;
+    color: black !important;
+  }
+
+  #pill-nav a {
+    font-size: 13px !important;
+    color: black !important;
+    text-decoration: none !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  #pill-nav .text-black\/60 {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+
+  #pill-nav a:hover {
+    color: black !important;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  #pill-nav .bg-black a,
+  #pill-nav .bg-black span {
+    color: white !important;
+    font-size: 10px !important;
+    letter-spacing: 0.1em !important;
+  }
+</style>
 
 <script>
   const pill = document.querySelector("#pill-nav");
@@ -88,9 +140,11 @@ import { personalInfo } from "../utils/data.js";
 
   const update = (state) => {
     isExpanded = state;
-    pill.classList.toggle("is-expanded", isExpanded);
-    backdrop.classList.toggle("opacity-100", isExpanded);
-    backdrop.classList.toggle("pointer-events-auto", isExpanded);
+    if (pill) pill.classList.toggle("is-expanded", isExpanded);
+    if (backdrop) {
+      backdrop.classList.toggle("opacity-100", isExpanded);
+      backdrop.classList.toggle("pointer-events-auto", isExpanded);
+    }
   };
 
   if (toggle && pill && backdrop) {
@@ -98,9 +152,11 @@ import { personalInfo } from "../utils/data.js";
       e.stopPropagation();
       update(!isExpanded);
     });
+
     document.addEventListener("click", (e) => {
-      if (isExpanded && !pill.contains(e.target)) update(false);
+      if (isExpanded && !pill.contains(e.target as Node)) update(false);
     });
+
     pill
       .querySelectorAll("a")
       .forEach((l) => l.addEventListener("click", () => update(false)));
