@@ -2,18 +2,18 @@
 import { projects, personalInfo } from "../utils/data.js";
 ---
 
-<section class="w-full px-5 py-24 bg-white" id="works">
+<section class="w-full px-5 py-32 md:py-48 bg-white" id="works">
   <div class="max-w-screen-xl mx-auto w-full">
     <!-- Introductory / Mission Text -->
-    <div class="max-w-5xl mx-auto text-center mb-20">
+    <div class="max-w-5xl mx-auto text-center mb-32 md:mb-48">
       <p
-        class="text-3xl md:text-5xl font-medium leading-normal md:leading-snug text-black"
+        class="text-4xl md:text-6xl font-medium leading-tight md:leading-tight text-black tracking-tight"
       >
-        <span class="text-gray-400">{personalInfo.bioPart1}</span>
+        <span class="text-gray-300">{personalInfo.bioPart1}</span>
         {personalInfo.bioPart2}
-        <span class="text-gray-400">{personalInfo.bioPart3}</span>
+        <span class="text-gray-400/60">{personalInfo.bioPart3}</span>
         {personalInfo.bioPart4}
-        <span class="text-gray-400">{personalInfo.bioPart5}</span>
+        <span class="text-gray-300">{personalInfo.bioPart5}</span>
       </p>
     </div>
 
