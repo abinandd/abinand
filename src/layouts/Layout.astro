@@ -54,6 +54,7 @@ const { title } = Astro.props;
           families: [
             "Poppins:300,regular,italic,500,600,700,800,900",
             "Inter:300,regular,500,600,700,800,900,italic",
+            "Raleway:100,200,300,regular,500,600,700,800,900,italic",
           ],
         },
       });
@@ -89,6 +90,37 @@ const { title } = Astro.props;
         hideDecimalForWholeNumbers: false,
       };
     </script>
+
+    <style is:global>
+      @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+      :root {
+        --_font-family---inter: "Raleway", sans-serif !important;
+        --_font-family---poppins: "Raleway", sans-serif !important;
+      }
+
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      span,
+      b,
+      strong,
+      li,
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      .font-sans,
+      .font-serif {
+        font-family: "Raleway", sans-serif !important;
+      }
+    </style>
   </head>
   <body>
     <slot />

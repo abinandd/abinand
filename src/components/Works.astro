@@ -5,17 +5,24 @@ import { projects, personalInfo } from "../utils/data.js";
 <section class="w-full px-5 py-32 md:py-48 bg-white" id="works">
   <div class="max-w-screen-xl mx-auto w-full">
     <!-- Introductory / Mission Text -->
-    <div class="max-w-5xl mx-auto text-center mb-32 md:mb-48">
+    <div class="max-w-5xl mx-auto text-left mb-32 md:mb-48">
       <p
-        class="text-4xl md:text-6xl font-medium leading-tight md:leading-tight text-black tracking-tight"
+        id="simple-reveal-text"
+        class="text-4xl md:text-5xl lg:text-5xl font-medium leading-[1.3] text-black tracking-tight opacity-100"
       >
-        <span class="text-gray-300">{personalInfo.bioPart1}</span>
-        {personalInfo.bioPart2}
-        <span class="text-gray-400/60">{personalInfo.bioPart3}</span>
-        {personalInfo.bioPart4}
-        <span class="text-gray-300">{personalInfo.bioPart5}</span>
+        Developer focused on strong fundamentals, scalable solutions, and
+        writing clean, efficient code. I enjoy turning complex requirements into
+        simple, reliable software while continuously improving code quality.
       </p>
     </div>
+
+    <script>
+      import { initSimpleReveal } from "../utils/animations.js";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initSimpleReveal("#simple-reveal-text");
+      });
+    </script>
 
     <!-- Works Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
