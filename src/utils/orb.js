@@ -1,0 +1,351 @@
+/**
+ * Orb Animation Utility
+ * Encapsulates the WebGL logic for the background orb.
+ */
+
+const ORB_SETTINGS = {
+    hue: 0,
+    hoverIntensity: 2,
+    rotateOnHover: true,
+    forceHoverState: false,
+    backgroundColor: "#020205",
+};
+
+const vert = `
+  precision highp float;
+  attribute vec2 position;
+  attribute vec2 uv;
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 0.0, 1.0);
+  }
+`;
+
+const frag = `
+  precision highp float;
+
+  uniform float iTime;
+  uniform vec3 iResolution;
+  uniform float hue;
+  uniform float hover;
+  uniform float rot;
+  uniform float hoverIntensity;
+  uniform vec3 backgroundColor;
+  varying vec2 vUv;
+
+  vec3 rgb2yiq(vec3 c) {
+    float y = dot(c, vec3(0.299, 0.587, 0.114));
+    float i = dot(c, vec3(0.596, -0.274, -0.322));
+    float q = dot(c, vec3(0.211, -0.523, 0.312));
+    return vec3(y, i, q);
+  }
+
+  vec3 yiq2rgb(vec3 c) {
+    float r = c.x + 0.956 * c.y + 0.621 * c.z;
+    float g = c.x - 0.272 * c.y - 0.647 * c.z;
+    float b = c.x - 1.106 * c.y + 1.703 * c.z;
+    return vec3(r, g, b);
+  }
+
+  vec3 adjustHue(vec3 color, float hueDeg) {
+    float hueRad = hueDeg * 3.14159265 / 180.0;
+    vec3 yiq = rgb2yiq(color);
+    float cosA = cos(hueRad);
+    float sinA = sin(hueRad);
+    float i = yiq.y * cosA - yiq.z * sinA;
+    float q = yiq.y * sinA + yiq.z * cosA;
+    yiq.y = i;
+    yiq.z = q;
+    return yiq2rgb(yiq);
+  }
+
+  vec3 hash33(vec3 p3) {
+    p3 = fract(p3 * vec3(0.1031, 0.11369, 0.13787));
+    p3 += dot(p3, p3.yxz + 19.19);
+    return -1.0 + 2.0 * fract(vec3(
+      p3.x + p3.y,
+      p3.x + p3.z,
+      p3.y + p3.z
+    ) * p3.zyx);
+  }
+
+  float snoise3(vec3 p) {
+    const float K1 = 0.333333333;
+    const float K2 = 0.166666667;
+    vec3 i = floor(p + (p.x + p.y + p.z) * K1);
+    vec3 d0 = p - (i - (i.x + i.y + i.z) * K2);
+    vec3 e = step(vec3(0.0), d0 - d0.yzx);
+    vec3 i1 = e * (1.0 - e.zxy);
+    vec3 i2 = 1.0 - e.zxy * (1.0 - e);
+    vec3 d1 = d0 - (i1 - K2);
+    vec3 d2 = d0 - (i2 - K1);
+    vec3 d3 = d0 - 0.5;
+    vec4 h = max(0.6 - vec4(
+      dot(d0, d0),
+      dot(d1, d1),
+      dot(d2, d2),
+      dot(d3, d3)
+    ), 0.0);
+    vec4 n = h * h * h * h * vec4(
+      dot(d0, hash33(i)),
+      dot(d1, hash33(i + i1)),
+      dot(d2, hash33(i + i2)),
+      dot(d3, hash33(i + 1.0))
+    );
+    return dot(vec4(31.316), n);
+  }
+
+  vec4 extractAlpha(vec3 colorIn) {
+    float a = max(max(colorIn.r, colorIn.g), colorIn.b);
+    return vec4(colorIn.rgb / (a + 1e-5), a);
+  }
+
+  const vec3 baseColor1 = vec3(0.611765, 0.262745, 0.996078);
+  const vec3 baseColor2 = vec3(0.298039, 0.760784, 0.913725);
+  const vec3 baseColor3 = vec3(0.062745, 0.078431, 0.600000);
+  const float innerRadius = 0.6;
+  const float noiseScale = 0.65;
+
+  float light1(float intensity, float attenuation, float dist) {
+    return intensity / (1.0 + dist * attenuation);
+  }
+  float light2(float intensity, float attenuation, float dist) {
+    return intensity / (1.0 + dist * dist * attenuation);
+  }
+
+  vec4 draw(vec2 uv) {
+    vec3 color1 = adjustHue(baseColor1, hue);
+    vec3 color2 = adjustHue(baseColor2, hue);
+    vec3 color3 = adjustHue(baseColor3, hue);
+
+    float ang = atan(uv.y, uv.x);
+    float len = length(uv);
+    float invLen = len > 0.0 ? 1.0 / len : 0.0;
+
+    float bgLuminance = dot(backgroundColor, vec3(0.299, 0.587, 0.114));
+
+    float n0 = snoise3(vec3(uv * noiseScale, iTime * 0.5)) * 0.5 + 0.5;
+    float r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
+    float d0 = distance(uv, (r0 * invLen) * uv);
+    float v0 = light1(1.0, 10.0, d0);
+    v0 *= smoothstep(r0 * 1.05, r0, len);
+    float innerFade = smoothstep(r0 * 0.8, r0 * 0.95, len);
+    v0 *= mix(innerFade, 1.0, bgLuminance * 0.7);
+    float cl = cos(ang + iTime * 2.0) * 0.5 + 0.5;
+
+    float a = iTime * -1.0;
+    vec2 pos = vec2(cos(a), sin(a)) * r0;
+    float d = distance(uv, pos);
+    float v1 = light2(1.5, 5.0, d);
+    v1 *= light1(1.0, 50.0, d0);
+
+    float v2 = smoothstep(1.0, mix(innerRadius, 1.0, n0 * 0.5), len);
+    float v3 = smoothstep(innerRadius, mix(innerRadius, 1.0, 0.5), len);
+
+    vec3 colBase = mix(color1, color2, cl);
+    float fadeAmount = mix(1.0, 0.1, bgLuminance);
+
+    vec3 darkCol = mix(color3, colBase, v0);
+    darkCol = (darkCol + v1) * v2 * v3;
+    darkCol = clamp(darkCol, 0.0, 1.0);
+
+    vec3 lightCol = (colBase + v1) * mix(1.0, v2 * v3, fadeAmount);
+    lightCol = mix(backgroundColor, lightCol, v0);
+    lightCol = clamp(lightCol, 0.0, 1.0);
+
+    vec3 finalCol = mix(darkCol, lightCol, bgLuminance);
+
+    return extractAlpha(finalCol);
+  }
+
+  vec4 mainImage(vec2 fragCoord) {
+    vec2 center = iResolution.xy * 0.5;
+    float size = min(iResolution.x, iResolution.y);
+    vec2 uv = (fragCoord - center) / size * 2.0;
+
+    float angle = rot;
+    float s = sin(angle);
+    float c = cos(angle);
+    uv = vec2(c * uv.x - s * uv.y, s * uv.x + c * uv.y);
+
+    uv.x += hover * hoverIntensity * 0.1 * sin(uv.y * 10.0 + iTime);
+    uv.y += hover * hoverIntensity * 0.1 * sin(uv.x * 10.0 + iTime);
+
+    return draw(uv);
+  }
+
+  void main() {
+    vec2 fragCoord = vUv * iResolution.xy;
+    vec4 col = mainImage(fragCoord);
+    gl_FragColor = vec4(col.rgb * col.a, col.a);
+  }
+`;
+
+function hexToVec3(color) {
+    if (!color || typeof color !== "string") return [0, 0, 0];
+    if (color.startsWith("#")) {
+        return [
+            parseInt(color.slice(1, 3), 16) / 255,
+            parseInt(color.slice(3, 5), 16) / 255,
+            parseInt(color.slice(5, 7), 16) / 255,
+        ];
+    }
+    const rgbMatch = color.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)\\)/);
+    if (rgbMatch) {
+        return [
+            parseInt(rgbMatch[1], 10) / 255,
+            parseInt(rgbMatch[2], 10) / 255,
+            parseInt(rgbMatch[3], 10) / 255,
+        ];
+    }
+    return [0, 0, 0];
+}
+
+function createShader(gl, type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.warn("Shader compile error:", gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+    return shader;
+}
+
+function createProgram(gl, vertexSource, fragmentSource) {
+    const program = gl.createProgram();
+    const vs = createShader(gl, gl.VERTEX_SHADER, vertexSource);
+    const fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+    if (!vs || !fs) return null;
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.warn("Program link error:", gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+    }
+    return program;
+}
+
+export function initOrb(sectionSelector, hostSelector) {
+    const container = document.querySelector(sectionSelector);
+    const host = document.querySelector(hostSelector);
+    if (!container || !host) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "absolute inset-0 w-full h-full";
+    canvas.style.pointerEvents = "none";
+    host.appendChild(canvas);
+
+    const gl =
+        canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false }) ||
+        canvas.getContext("experimental-webgl");
+    if (!gl) {
+        host.remove();
+        return;
+    }
+
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    const program = createProgram(gl, vert, frag);
+    if (!program) return;
+    gl.useProgram(program);
+
+    const positionLocation = gl.getAttribLocation(program, "position");
+    const uvLocation = gl.getAttribLocation(program, "uv");
+    const uTime = gl.getUniformLocation(program, "iTime");
+    const uResolution = gl.getUniformLocation(program, "iResolution");
+    const uHue = gl.getUniformLocation(program, "hue");
+    const uHover = gl.getUniformLocation(program, "hover");
+    const uRot = gl.getUniformLocation(program, "rot");
+    const uHoverIntensity = gl.getUniformLocation(program, "hoverIntensity");
+    const uBg = gl.getUniformLocation(program, "backgroundColor");
+
+    const positions = new Float32Array([
+        -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+    ]);
+    const uvs = new Float32Array([0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1]);
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    const uvBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(uvLocation);
+    gl.vertexAttribPointer(uvLocation, 2, gl.FLOAT, false, 0, 0);
+
+    const bg = hexToVec3(ORB_SETTINGS.backgroundColor);
+
+    function resize() {
+        const rect = host.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = rect.width || 1;
+        const height = rect.height || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform3f(uResolution, canvas.width, canvas.height, canvas.width / canvas.height);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    let targetHover = ORB_SETTINGS.forceHoverState ? 1 : 0;
+    let hover = targetHover;
+    let rot = 0;
+    let lastTime = 0;
+    const rotationSpeed = 0.3;
+
+    function handlePointerMove(e) {
+        const rect = container.getBoundingClientRect();
+        const width = rect.width || 1;
+        const height = rect.height || 1;
+        const size = Math.min(width, height);
+        const centerX = rect.left + width / 2;
+        const centerY = rect.top + height / 2;
+        const uvX = ((e.clientX - centerX) / size) * 2;
+        const uvY = ((e.clientY - centerY) / size) * 2;
+        const dist = Math.sqrt(uvX * uvX + uvY * uvY);
+        targetHover = ORB_SETTINGS.forceHoverState ? 1 : dist < 0.8 ? 1 : 0;
+    }
+
+    function handlePointerLeave() {
+        targetHover = ORB_SETTINGS.forceHoverState ? 1 : 0;
+    }
+
+    container.addEventListener("pointermove", handlePointerMove);
+    container.addEventListener("pointerleave", handlePointerLeave);
+
+    function render(t) {
+        const dt = (t - lastTime) * 0.001;
+        lastTime = t;
+
+        hover += (targetHover - hover) * 0.1;
+        if (ORB_SETTINGS.rotateOnHover && targetHover > 0.5) {
+            rot += dt * rotationSpeed;
+        }
+
+        gl.useProgram(program);
+        gl.uniform1f(uTime, t * 0.001);
+        gl.uniform1f(uHue, ORB_SETTINGS.hue);
+        gl.uniform1f(uHover, hover);
+        gl.uniform1f(uRot, rot);
+        gl.uniform1f(uHoverIntensity, ORB_SETTINGS.hoverIntensity);
+        gl.uniform3f(uBg, bg[0], bg[1], bg[2]);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+}

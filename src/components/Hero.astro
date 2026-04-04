@@ -1,21 +1,26 @@
 ---
 import { personalInfo } from "../utils/data.js";
+import HeroOrb from "./HeroOrb.astro";
 ---
 
 <div
-  class="w-full min-h-screen px-5 py-32 md:py-52 lg:py-72 flex justify-center bg-transparent min-h-[60vh] items-center"
+  id="hero-section"
+  class="relative overflow-hidden w-full min-h-screen px-5 py-32 md:py-52 lg:py-72 flex justify-center bg-transparent min-h-[60vh] items-center"
 >
-  <div class="max-w-screen-xl mx-auto flex flex-col items-center text-center">
-    <div class="w-full max-w-5xl flex flex-col items-center leading-none">
+  <HeroOrb />
+  <div
+    class="max-w-screen-xl mx-auto flex flex-col items-center text-center w-full"
+  >
+    <div class="w-full max-w-7xl flex flex-col items-center leading-none">
       <span
         id="hero-line-1"
-        class="text-6xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] font-black tracking-tighter text-white leading-[0.85] opacity-0"
+        class="text-6xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] font-medium tracking-normal text-white leading-[0.85] opacity-0"
       >
         Hi, I'm
       </span>
       <h1
         id="hero-line-2"
-        class="text-6xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] font-black tracking-tighter text-white leading-[0.85] opacity-0"
+        class="text-6xl sm:text-7xl md:text-[8rem] lg:text-[9.5rem] font-medium tracking-normal text-white leading-[0.85] opacity-0"
       >
         {personalInfo.name}
       </h1>
@@ -26,7 +31,7 @@ import { personalInfo } from "../utils/data.js";
 <script>
   import { initSplitText } from "../utils/animations.js";
 
-  // High-performance staggered staggered reveal
+  // High-performance staggered reveal
   document.addEventListener("DOMContentLoaded", () => {
     initSplitText("#hero-line-1"); // Hi, I'm
 

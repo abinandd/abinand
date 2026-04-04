@@ -1,0 +1,26 @@
+---
+/**
+ * HeroOrb.astro
+ * Container for the WebGL Orb animation.
+ */
+---
+
+<div
+    id="hero-orb-container"
+    class="absolute inset-0 -z-10 pointer-events-none"
+    aria-hidden="true"
+>
+</div>
+
+<script>
+    import { initOrb } from "../utils/orb.js";
+
+    // Initialize the orb animation
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () =>
+            initOrb("#hero-section", "#hero-orb-container"),
+        );
+    } else {
+        initOrb("#hero-section", "#hero-orb-container");
+    }
+</script>
