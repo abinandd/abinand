@@ -10,7 +10,7 @@ import { personalInfo } from "../utils/data.js";
 >
   <nav
     id="pill-nav"
-    class="pointer-events-auto bg-white/90 backdrop-blur-3xl rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] border border-black/5 flex items-center p-1.5 pl-3 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-w-[280px] justify-between group/nav"
+    class="pointer-events-auto bg-white/95 backdrop-blur-3xl rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] border border-black/5 flex items-center p-1.5 pl-3 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-w-[280px] group-[.is-expanded]/nav:min-w-[320px] justify-between group/nav"
   >
     <!-- Left: Profile -->
     <a href="/" class="flex items-center gap-3 shrink-0 group/avatar">
@@ -24,7 +24,7 @@ import { personalInfo } from "../utils/data.js";
         />
       </div>
       <span
-        class="text-black font-bold text-[14px] tracking-tight hidden sm:block"
+        class="!text-black !font-bold !text-[14px] tracking-tight hidden sm:block"
       >
         {personalInfo.name}
       </span>
@@ -37,34 +37,23 @@ import { personalInfo } from "../utils/data.js";
       <div class="flex items-center gap-2 pl-4 border-l border-black/5">
         <a
           href="#about"
-          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          class="!no-underline px-3 py-1.5 !text-[13px] font-bold !text-black/60 hover:!text-black transition-colors rounded-full hover:bg-black/5 !tracking-[0.02em]"
           >About</a
         >
         <a
           href="#works"
-          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          class="!no-underline px-3 py-1.5 !text-[13px] font-bold !text-black/60 hover:!text-black transition-colors rounded-full hover:bg-black/5 !tracking-[0.02em]"
           >Works</a
         >
         <a
           href="#services"
-          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
+          class="!no-underline px-3 py-1.5 !text-[13px] font-bold !text-black/60 hover:!text-black transition-colors rounded-full hover:bg-black/5 !tracking-[0.02em]"
           >Services</a
         >
         <a
-          href="#testimonials"
-          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5"
-          >Feedbacks</a
-        >
-        <a
           href="#blog"
-          class="px-3 py-1.5 text-[11px] font-bold text-black/60 hover:text-black transition-colors rounded-full hover:bg-black/5 hidden md:block"
+          class="!no-underline px-3 py-1.5 !text-[13px] font-bold !text-black/60 hover:!text-black transition-colors rounded-full hover:bg-black/5 !tracking-[0.02em] hidden md:block"
           >Blog</a
-        >
-
-        <a
-          href="mailto:abhinand155@gmail.com"
-          class="ml-4 px-5 py-2.5 bg-black text-white text-[10px] font-black rounded-full hover:bg-gray-800 transition-all uppercase tracking-widest shadow-lg shrink-0"
-          >Hire Me</a
         >
       </div>
     </div>
@@ -72,16 +61,19 @@ import { personalInfo } from "../utils/data.js";
     <!-- Right: Expansion Trigger -->
     <button
       id="menu-toggle"
-      class="w-9 h-9 bg-black rounded-full flex flex-col items-center justify-center gap-[3px] transition-all duration-500 hover:scale-105 active:scale-95 shrink-0 ml-4 group-hover/nav:bg-[#222]"
+      class="w-9 h-9 bg-black rounded-full flex items-center justify-center transition-all duration-500 hover:scale-105 active:scale-95 shrink-0 ml-4 group-hover/nav:bg-[#222]"
       aria-label="Toggle Menu"
     >
-      <div
-        class="w-3.5 h-[1.5px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:rotate-45 group-[.is-expanded]/nav:translate-y-[2.2px]"
-      >
-      </div>
-      <div
-        class="w-3.5 h-[1.5px] bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:-rotate-45 group-[.is-expanded]/nav:-translate-y-[2.2px]"
-      >
+      <div class="relative w-4 h-4 flex items-center justify-center">
+        <span
+          class="absolute h-[1.5px] w-4 bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:rotate-45 -translate-y-1.5 group-[.is-expanded]/nav:translate-y-0"
+        ></span>
+        <span
+          class="absolute h-[1.5px] w-4 bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:opacity-0 group-[.is-expanded]/nav:translate-x-4"
+        ></span>
+        <span
+          class="absolute h-[1.5px] w-4 bg-white rounded-full transition-all duration-500 group-[.is-expanded]/nav:-rotate-45 translate-y-1.5 group-[.is-expanded]/nav:translate-y-0"
+        ></span>
       </div>
     </button>
   </nav>
@@ -93,52 +85,13 @@ import { personalInfo } from "../utils/data.js";
 >
 </div>
 
-<style is:inline>
-  #pill-nav {
-    background-color: rgba(255, 255, 255, 0.95) !important;
-  }
-
-  #pill-nav.is-expanded {
-    min-width: 320px;
-  }
-
-  /* Force override global white text styles */
-  #pill-nav span {
-    font-size: 14px !important;
-    color: black !important;
-  }
-
-  #pill-nav a {
-    font-size: 13px !important;
-    color: black !important;
-    text-decoration: none !important;
-    letter-spacing: 0.02em !important;
-  }
-
-  #pill-nav .text-black\/60 {
-    color: rgba(0, 0, 0, 0.6) !important;
-  }
-
-  #pill-nav a:hover {
-    color: black !important;
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  #pill-nav .bg-black a,
-  #pill-nav .bg-black span {
-    color: white !important;
-    font-size: 10px !important;
-    letter-spacing: 0.1em !important;
-  }
-</style>
-
 <script>
   const pill = document.querySelector("#pill-nav");
   const toggle = document.querySelector("#menu-toggle");
   const backdrop = document.querySelector("#nav-backdrop");
   let isExpanded = false;
 
-  const update = (state) => {
+  const update = (state: boolean) => {
     isExpanded = state;
     if (pill) pill.classList.toggle("is-expanded", isExpanded);
     if (backdrop) {
