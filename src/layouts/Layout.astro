@@ -164,6 +164,29 @@ const { title } = Astro.props;
         color: rgba(255, 255, 255, 0.7) !important;
       }
 
+      /* Tighten up global section spacing */
+      .best-section,
+      .testimonial-section,
+      .brand-section,
+      .achievement-section,
+      .faq-section,
+      .blogs-section {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+
+      @media (max-width: 768px) {
+        .best-section,
+        .testimonial-section,
+        .brand-section,
+        .achievement-section,
+        .faq-section,
+        .blogs-section {
+          padding-top: 1rem !important;
+          padding-bottom: 1rem !important;
+        }
+      }
+
       /* Remove legacy Webflow shadows that look bad in dark mode */
       .shadow-lg,
       .shadow-md,

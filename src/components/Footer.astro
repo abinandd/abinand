@@ -2,22 +2,22 @@
 import { personalInfo } from "../utils/data.js";
 ---
 
-<footer class="w-full bg-white px-5 py-20 mt-10">
+<footer class="w-full bg-[#0c0c0d] px-5 py-20 border-t border-white/5">
   <div
-    class="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center bg-gray-50 rounded-3xl p-10 mb-10 overflow-hidden relative"
+    class="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center bg-[#1a1a1c] rounded-3xl p-10 mb-10 overflow-hidden relative border border-white/5"
   >
     <div
       class="w-full text-center z-10 px-4 md:px-0 relative mb-10 md:mb-0 py-10"
     >
       <h2
-        class="text-4xl md:text-5xl font-semibold text-gray-900 mb-10 max-w-2xl mx-auto"
+        class="text-4xl md:text-5xl font-semibold text-white mb-10 max-w-2xl mx-auto"
       >
         Let's Build Something Remarkable
       </h2>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
           href="/projects"
-          class="group flex items-center bg-black text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-800 transition"
+          class="group flex items-center bg-white text-black px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-200 transition"
         >
           <span>Start a Project</span>
           <svg
@@ -33,7 +33,7 @@ import { personalInfo } from "../utils/data.js";
         </a>
         <a
           href={`mailto:${personalInfo.email}`}
-          class="group flex items-center bg-white border border-gray-300 text-black px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-50 transition"
+          class="group flex items-center bg-black border border-white/10 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-900 transition"
         >
           <span>Contact Me</span>
           <svg
@@ -52,52 +52,54 @@ import { personalInfo } from "../utils/data.js";
   </div>
 
   <div
-    class="max-w-screen-xl mx-auto flex flex-col lg:flex-row justify-between items-center text-base text-gray-600 gap-8 mt-10 border-t border-gray-200 pt-8"
+    class="max-w-screen-xl mx-auto flex flex-col lg:flex-row justify-between items-center text-base text-white/50 gap-8 mt-10 border-t border-white/5 pt-8"
   >
     <div class="flex flex-wrap justify-center gap-6 font-medium">
-      <a href="/" class="hover:text-black hover:underline" aria-current="page"
+      <a href="/" class="hover:text-white hover:underline" aria-current="page"
         >Home</a
       >
-      <a href="/projects" class="hover:text-black hover:underline">Projects</a>
-      <a href="/services" class="hover:text-black hover:underline">Services</a>
-      <a href="/about" class="hover:text-black hover:underline">About us</a>
-      <a href="/blogs" class="hover:text-black hover:underline">Blog</a>
+      <a href="/projects" class="hover:text-white hover:underline">Projects</a>
+      <a href="/services" class="hover:text-white hover:underline">Services</a>
+      <a href="/about" class="hover:text-white hover:underline">About us</a>
+      <a href="/blogs" class="hover:text-white hover:underline">Blog</a>
     </div>
 
     <div class="flex flex-wrap justify-center gap-6 font-medium">
       <a
         href={personalInfo.github}
         target="_blank"
-        class="hover:text-black hover:underline">GitHub</a
+        class="hover:text-white hover:underline">GitHub</a
       >
       <a
         href={personalInfo.linkedin}
         target="_blank"
-        class="hover:text-black hover:underline">LinkedIn</a
+        class="hover:text-white hover:underline">LinkedIn</a
       >
       <a
         href={personalInfo.leetcode}
         target="_blank"
-        class="hover:text-black hover:underline">LeetCode</a
+        class="hover:text-white hover:underline">LeetCode</a
       >
       <a
         href={`mailto:${personalInfo.email}`}
         target="_blank"
-        class="hover:text-black hover:underline">Email</a
+        class="hover:text-white hover:underline">Email</a
       >
     </div>
 
-    <div class="font-medium text-center flex gap-2 justify-center items-center">
+    <div
+      class="font-medium text-center flex gap-2 justify-center items-center text-white/70"
+    >
       Designed by <a
         href={personalInfo.github}
         target="_blank"
-        class="text-black hover:underline">{personalInfo.name}</a
+        class="text-white hover:underline">{personalInfo.name}</a
       >
-      <span class="w-1.5 h-1.5 bg-gray-300 rounded-full mx-1"></span>
+      <span class="w-1.5 h-1.5 bg-white/20 rounded-full mx-1"></span>
       <a
         href="/resume.pdf"
         download="resume.pdf"
-        class="hover:text-black hover:underline">Resume</a
+        class="hover:text-white hover:underline">Resume</a
       >
     </div>
   </div>
