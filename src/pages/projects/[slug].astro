@@ -1,0 +1,193 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import { personalInfo, projects } from "../../utils/data.js";
+
+export function getStaticPaths() {
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+
+// Find next/prev projects for navigation
+const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+const prevProject = projects[currentIndex - 1] ?? null;
+const nextProject = projects[currentIndex + 1] ?? null;
+---
+
+<Layout title={`${project.title} — ${personalInfo.name}`}>
+    <div class="min-h-screen bg-[#0c0c0d]">
+        <Navigation />
+
+        <main class="max-w-screen-xl mx-auto px-5 pt-16 pb-28">
+            <!-- Back link -->
+            <a
+                href="/projects"
+                class="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors duration-200 mb-12 group"
+            >
+                <svg
+                    class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M3.21834 5.33312L6.79434 1.75712L5.85167 0.814453L0.666340 5.99979L5.85167 11.1851L6.79434 10.2425L3.21834 6.66645H11.333V5.33312H3.21834Z"
+                        fill="currentColor"></path>
+                </svg>
+                All Projects
+            </a>
+
+            <!-- Project Header -->
+            <div
+                class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
+            >
+                <div>
+                    <span
+                        class="text-white/30 text-sm font-medium uppercase tracking-widest"
+                        >{project.category} · {project.year}</span
+                    >
+                    <h1
+                        class="mt-1 text-4xl md:text-6xl font-semibold text-white tracking-tight leading-none"
+                    >
+                        {project.title}
+                    </h1>
+                </div>
+                <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/90 hover:scale-[1.02] active:scale-95 self-start md:self-auto shrink-0"
+                    style="color: black !important;"
+                >
+                    <span style="color: black !important;">Visit Live Site</span
+                    >
+                    <svg
+                        class="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M10 2L2 10M10 2H4M10 2V8"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="w-full aspect-video overflow-hidden mb-16">
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover"
+                />
+            </div>
+
+            <!-- Project Details -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+                <!-- Description (wider) -->
+                <div class="md:col-span-2">
+                    <h2
+                        class="text-xs font-medium text-white/30 uppercase tracking-widest mb-4"
+                    >
+                        About
+                    </h2>
+                    <p class="text-white/80 text-lg leading-relaxed font-light">
+                        {project.description}
+                    </p>
+                </div>
+
+                <!-- Sidebar: Role + Tech -->
+                <div class="flex flex-col gap-8">
+                    <div>
+                        <h2
+                            class="text-xs font-medium text-white/30 uppercase tracking-widest mb-3"
+                        >
+                            Role
+                        </h2>
+                        <p class="text-white text-base font-medium">
+                            {project.role}
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2
+                            class="text-xs font-medium text-white/30 uppercase tracking-widest mb-3"
+                        >
+                            Tech Stack
+                        </h2>
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                project.tech.map((t: string) => (
+                                    <span class="text-sm text-white/60 border border-white/10 px-3 py-1 rounded-full">
+                                        {t}
+                                    </span>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2
+                            class="text-xs font-medium text-white/30 uppercase tracking-widest mb-3"
+                        >
+                            Year
+                        </h2>
+                        <p class="text-white text-base font-medium">
+                            {project.year}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-white/5 mt-20 mb-16"></div>
+
+            <!-- Prev / Next Navigation -->
+            <div class="flex items-center justify-between gap-4">
+                {
+                    prevProject ? (
+                        <a
+                            href={`/projects/${prevProject.slug}`}
+                            class="group flex flex-col gap-1"
+                        >
+                            <span class="text-xs text-white/30 uppercase tracking-widest">
+                                Previous
+                            </span>
+                            <span class="text-white font-medium group-hover:text-white/70 transition-colors duration-200">
+                                {prevProject.title}
+                            </span>
+                        </a>
+                    ) : (
+                        <div />
+                    )
+                }
+                {
+                    nextProject && (
+                        <a
+                            href={`/projects/${nextProject.slug}`}
+                            class="group flex flex-col gap-1 text-right"
+                        >
+                            <span class="text-xs text-white/30 uppercase tracking-widest">
+                                Next
+                            </span>
+                            <span class="text-white font-medium group-hover:text-white/70 transition-colors duration-200">
+                                {nextProject.title}
+                            </span>
+                        </a>
+                    )
+                }
+            </div>
+        </main>
+
+        <Footer />
+    </div>
+</Layout>

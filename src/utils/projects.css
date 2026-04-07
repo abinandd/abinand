@@ -1,0 +1,15 @@
+/* Custom pop-in animation for layout shifts */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.project-card {
+    animation-fill-mode: forwards;
+}

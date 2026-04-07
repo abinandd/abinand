@@ -6,12 +6,14 @@ export function initSplitText(selector) {
     const elements = document.querySelectorAll(selector);
 
     elements.forEach(element => {
-        const text = element.innerText;
+        const text = element.textContent.trim();
+        if (!text) return;
+
         element.innerHTML = '';
         element.style.opacity = '1';
 
         const chars = text.split('');
-        chars.forEach((char, index) => {
+        const spans = chars.map((char, index) => {
             const span = document.createElement('span');
             span.textContent = char === ' ' ? '\u00A0' : char;
             span.style.display = 'inline-block';
@@ -24,12 +26,20 @@ export function initSplitText(selector) {
         filter 0.8s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.04}s
       `;
             element.appendChild(span);
-            setTimeout(() => {
+            return span;
+        });
+
+        // Trigger reflow once for all spans
+        element.offsetHeight;
+
+        // Reveal character by character using the delays in CSS
+        setTimeout(() => {
+            spans.forEach(span => {
                 span.style.opacity = '1';
                 span.style.transform = 'translateY(0) scale(1)';
                 span.style.filter = 'blur(0px)';
-            }, 50);
-        });
+            });
+        }, 50);
     });
 }
 

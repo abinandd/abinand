@@ -31,12 +31,19 @@ import HeroOrb from "./HeroOrb.astro";
 <script>
   import { initSplitText } from "../utils/animations.js";
 
-  // High-performance staggered reveal
-  document.addEventListener("DOMContentLoaded", () => {
-    initSplitText("#hero-line-1"); // Hi, I'm
-
+  const runHeroAnimation = () => {
+    // Small delay to ensure browser has settled
     setTimeout(() => {
-      initSplitText("#hero-line-2"); // Abhinand
-    }, 300);
-  });
+      initSplitText("#hero-line-1");
+      setTimeout(() => {
+        initSplitText("#hero-line-2");
+      }, 300);
+    }, 100);
+  };
+
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", runHeroAnimation);
+  } else {
+    runHeroAnimation();
+  }
 </script>

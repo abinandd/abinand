@@ -14,52 +14,94 @@ export const personalInfo = {
 
 export const projects = [
     {
+        slug: "wealth-flow",
         title: "Wealth Flow",
         image: "/assets/images/wealthflow.webp",
         link: "https://wealthflow-3w8.pages.dev/",
         category: "Full Stack",
+        year: "2024",
+        description:
+            "A next-generation wealth management platform built for modern investors. Wealth Flow helps users track portfolios, monitor real-time market data, and make informed financial decisions — all in a clean, distraction-free interface.",
+        role: "Full Stack Developer",
+        tech: ["React", "Node.js", "Tailwind CSS", "REST API", "Cloudflare Pages"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group",
     },
     {
+        slug: "mandara-wellness",
         title: "Mandara Wellness",
         image: "/assets/images/mandara.webp",
         link: "https://mandarawellness.in/",
         category: "Websites",
+        year: "2024",
+        description:
+            "A premium wellness and healthcare website for Mandara, a leading wellness center. The site focuses on calm, luxurious aesthetics aligned with the brand's vision — featuring smooth animations, a booking flow, and detailed service pages.",
+        role: "Frontend Developer",
+        tech: ["Astro", "Tailwind CSS", "JavaScript", "Vercel"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group",
     },
     {
+        slug: "travello",
         title: "Travello",
         image: "/assets/images/travello.webp",
         link: "https://travello-nine-drab.vercel.app/",
         category: "Websites",
+        year: "2024",
+        description:
+            "A travel discovery platform that helps users plan, explore, and book their perfect desert and nature escapes. Features curated destination showcases, interactive galleries, and a booking-ready UI.",
+        role: "Frontend Developer",
+        tech: ["React", "Tailwind CSS", "Vercel"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group",
     },
     {
+        slug: "mindgrid",
         title: "MindGrid",
         image: "/assets/images/mindgrid.png",
         link: "https://mindgrid-phi.vercel.app/",
         category: "Full Stack",
+        year: "2024",
+        description:
+            "A data analytics and business intelligence platform that transforms raw data into actionable insights. MindGrid features interactive dashboards, real-time metric tracking, and intelligent visualizations.",
+        role: "Full Stack Developer",
+        tech: ["React", "Node.js", "Chart.js", "PostgreSQL", "Vercel"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group",
     },
     {
+        slug: "chub-ecosystem",
         title: "C-Hub Ecosystem",
         image: "/assets/images/chub.png",
         link: "https://chubworld.com/",
         category: "Full Stack",
+        year: "2023",
+        description:
+            "A holistic EdTech platform creating an interconnected learning ecosystem for students and educators. C-Hub brings together live classes, resource libraries, and community features under one roof.",
+        role: "Full Stack Developer",
+        tech: ["Next.js", "Node.js", "MongoDB", "Tailwind CSS", "AWS"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group hidden md:block",
     },
     {
+        slug: "youtube-clone",
         title: "Youtube Clone",
         image: "/assets/images/youtube.png",
         link: "https://youtube-clone-omega-roan.vercel.app/",
         category: "Full Stack",
+        year: "2023",
+        description:
+            "A fully functional YouTube clone built to replicate the core browsing, searching, and video-watching experience. Features the YouTube Data API for live content, responsive layouts, and a dark-mode-ready UI.",
+        role: "Frontend Developer",
+        tech: ["React", "YouTube Data API v3", "Tailwind CSS", "Vercel"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group hidden md:block",
     },
     {
+        slug: "gemchat-ai",
         title: "GemChat Ai",
         image: "/assets/images/gemini.png",
         link: "https://realtime-ai-chatbot.vercel.app/",
         category: "Full Stack",
+        year: "2024",
+        description:
+            "A real-time AI chatbot powered by Google's Gemini API. GemChat delivers fast, conversational AI responses in a sleek chat interface with streaming support and a minimal, distraction-free design.",
+        role: "Full Stack Developer",
+        tech: ["React", "Google Gemini API", "Node.js", "Tailwind CSS", "Vercel"],
         visibilityClasses: "block w-full overflow-hidden rounded-2xl group hidden lg:block",
-    }
+    },
 ];
