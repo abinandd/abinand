@@ -7,13 +7,13 @@ export function initProjectFilter() {
         tab.addEventListener("click", () => {
             // 1. Reset all tabs to inactive styles
             tabs.forEach((t) => {
-                t.classList.remove("bg-white", "text-black", "active-tab");
-                t.classList.add("text-gray-400");
+                t.classList.remove("bg-white", "text-black", "border-white", "active-tab");
+                t.classList.add("text-white/50", "border-white/10", "hover:text-white", "hover:border-white/30");
             });
 
             // 2. Set the clicked tab as active
-            tab.classList.remove("text-gray-400");
-            tab.classList.add("bg-white", "text-black", "active-tab");
+            tab.classList.remove("text-white/50", "border-white/10", "hover:text-white", "hover:border-white/30", "text-gray-400");
+            tab.classList.add("bg-white", "text-black", "border-white", "active-tab");
 
             // 3. Filter the cards
             const targetCategory = tab.getAttribute("data-category");

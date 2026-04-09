@@ -16,18 +16,18 @@ const TAB_CATEGORIES = [
     <div class="min-h-screen bg-[#0c0c0d]">
         <Navigation />
 
-        <main class="max-w-screen-xl mx-auto px-5 pt-16 pb-24">
+        <main class="max-w-screen-xl mx-auto px-5 pt-32 md:pt-40 pb-24">
 
             <!-- Page Header -->
-            <div class="mb-12">
-                <h1 class="text-4xl md:text-5xl font-semibold text-white tracking-tight">
+            <div class="mb-12 text-center flex flex-col items-center">
+                <h1 class="text-3xl font-semibold text-white tracking-tight">
                     All Projects
                 </h1>
                 <p class="mt-2 text-white/40 text-sm">A collection of things I've built.</p>
             </div>
 
             <!-- Filter Tabs -->
-            <div class="flex items-center gap-2 mb-12 flex-wrap">
+            <div class="flex items-center justify-center gap-2 mb-12 flex-wrap">
                 {
                     TAB_CATEGORIES.map((cat, index) => (
                         <button
